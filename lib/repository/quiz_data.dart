@@ -4,8 +4,26 @@ class QuizData {
   static List<Quiz> datas = [
     Quiz(
       mainAnswer: 'he was born in the jungle',
-      questions: ['yang dipakai kaki', 'sang raja rimba', 'delapan belas'],
-      answers: ['shoes', 'lion', 'eighteen'],
+      questions: [
+        'yang dipakai kaki',
+        'sang raja rimba',
+        'delapan belas',
+        'gitar',
+        'perang',
+        'lahir',
+        'besar',
+        'penjara'
+      ],
+      answers: [
+        'shoes',
+        'lion',
+        'eighteen',
+        'guitar',
+        'war',
+        'birth',
+        'big',
+        'jail'
+      ],
     ),
     Quiz(
       mainAnswer: 'quiz 2',
