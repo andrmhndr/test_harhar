@@ -38,6 +38,8 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
+  int hehehe = 0;
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
