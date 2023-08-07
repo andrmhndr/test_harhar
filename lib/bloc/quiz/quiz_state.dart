@@ -15,9 +15,12 @@ class QuizState extends Equatable {
 
   factory QuizState.initial() {
     return QuizState(
-        quiz: QuizData.datas,
-        answerController:
-            List.generate(50, (index) => TextEditingController()));
+      quiz: QuizData.datas,
+      answerController: List.generate(
+        50,
+        (index) => TextEditingController(),
+      ),
+    );
   }
 
   @override

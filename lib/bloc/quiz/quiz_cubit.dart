@@ -10,36 +10,59 @@ class QuizCubit extends Cubit<QuizState> {
   QuizCubit() : super(QuizState.initial());
 
   void nextQuiz() {
-    emit(state.copyWith(
-        count:
-            (state.count + 1 > state.quiz.length - 1) ? 0 : state.count + 1));
+    clear();
+    emit(
+      state.copyWith(
+          count:
+              (state.count + 1 > state.quiz.length - 1) ? 0 : state.count + 1),
+    );
     startAnswers();
   }
 
+  void clear(){ 
+    for (TextEditingController controller in state.answerController) {
+      controller.clear();
+      
+    }
+    
+  }
+
   void updateCharCollect(String value) {
-    List<String> newCharCollect = value.runes.fold([], (previousValue, char) {
-      var chars = previousValue;
-      if (!previousValue.contains(String.fromCharCode(char))) {
-        chars.add(String.fromCharCode(char));
-      }
-      return chars;
-    });
+    List<String> newCharCollect = value.runes.fold(
+      [],
+      (previousValue, char) {
+        var chars = previousValue;
+        if (!previousValue.contains(
+          String.fromCharCode(char),
+        )) {
+          chars.add(
+            String.fromCharCode(char),
+          );
+        }
+        return chars;
+      },
+    );
 
     emit(state.copyWith(charCollect: newCharCollect));
   }
 
   void startAnswers() {
-    List<String> charCollect = state.quiz[state.count].mainAnswer.characters
-        .fold([], (previousValue, char) {
-      var chars = previousValue;
-      if (!previousValue.contains(char)) {
-        chars.add(char);
-      }
-      return chars;
-    });
-    emit(state.copyWith(
-      charCollect: charCollect,
-    ));
+    List<String> charCollect =
+        state.quiz[state.count].mainAnswer.characters.fold(
+      [],
+      (previousValue, char) {
+        var chars = previousValue;
+        if (!previousValue.contains(char)) {
+          chars.add(char);
+        }
+        return chars;
+      },
+    );
+    emit(
+      state.copyWith(
+        charCollect: charCollect,
+      ),
+    );
     // List<String> answers = [];
     // for (var element in state.quiz[state.count].answers) {
     //   String text = '';
@@ -66,6 +89,12 @@ class QuizCubit extends Cubit<QuizState> {
     List<TextEditingController> controllerList =
         List.from(state.answerController);
     controllerList[answerIndex] = controller;
-    emit(state.copyWith(answerController: controllerList));
+    controller.selection = TextSelection.fromPosition(
+      TextPosition(offset: controller.text.length),
+    );
+
+    emit(
+      state.copyWith(answerController: controllerList),
+    );
   }
 }
