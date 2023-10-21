@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 class Quiz extends Equatable {
   final String mainAnswer;
   final String mainAnswerTranslate;
+  final String instruction;
   final List<String> questions;
   final List<String> answers;
 
   const Quiz({
     required this.mainAnswer,
     required this.mainAnswerTranslate,
+    required this.instruction,
     required this.questions,
     required this.answers,
   });

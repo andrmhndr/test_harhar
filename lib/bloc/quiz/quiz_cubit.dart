@@ -1,8 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:test_harhar/models/quiz.dart';
 import 'package:test_harhar/repository/quiz_data.dart';
+import 'package:test_harhar/screen/game_end_screen.dart';
+import 'package:test_harhar/screen/gameplay_screen.dart';
+import 'package:test_harhar/app_assets.dart';
 
 part 'quiz_state.dart';
 
@@ -10,21 +15,43 @@ class QuizCubit extends Cubit<QuizState> {
   QuizCubit() : super(QuizState.initial());
 
   void nextQuiz() {
+    stopAudio();
     clear();
-    emit(
-      state.copyWith(
-          count:
-              (state.count + 1 > state.quiz.length - 1) ? 0 : state.count + 1),
-    );
-    startAnswers();
+    if (state.count + 1 > state.quiz.length - 1) {
+      // emit(state.copyWith(count: 0));
+      Get.back();
+      Get.to(() => GameEndSCreen());
+      emit(QuizState.initial());
+    } else {
+      emit(
+        state.copyWith(
+            count: (state.count + 1 > state.quiz.length - 1)
+                ? 0
+                : state.count + 1),
+      );
+      // playBackgroundMusic();
+      // playAudio(appAssets.quizbgSound);
+      playLoopAudio(appAssets.quizbgSound);
+      startAnswers();
+    }
   }
 
-  void clear(){ 
+  void clear() {
     for (TextEditingController controller in state.answerController) {
       controller.clear();
-      
     }
-    
+  }
+
+  void startGame() {
+    playAudio(appAssets.clickSound);
+
+    // playLoopAudio(appAssets.quizbgSound);
+    stopAudio();
+
+    // Navigate to the gameplay screen when the button is pressed
+    // Navigator.popAndPushNamed(context, '/gameplay');
+    Get.to(() => GameplayScreen());
+    emit(QuizState.initial());
   }
 
   void updateCharCollect(String value) {
@@ -96,5 +123,41 @@ class QuizCubit extends Cubit<QuizState> {
     emit(
       state.copyWith(answerController: controllerList),
     );
+  }
+
+  bool isPlaying = false;
+
+  void playAudio(String audioUrl) async {
+    await state.audioPlayer.setAsset(audioUrl);
+    await state.audioPlayer.play();
+  }
+
+  void playLoopAudio(String audioUrl) async {
+    await state.loopAudioPlayer.setAsset(audioUrl);
+    await state.loopAudioPlayer.setLoopMode(LoopMode.one);
+    await state.loopAudioPlayer.play();
+    // isPlaying = true;
+  }
+
+  void stopAudio() {
+    state.loopAudioPlayer.stop();
+    // isPlaying = false;
+  }
+
+  void stopMainAudio() {
+    state.audioPlayer.stop();
+  }
+
+  void playBackgroundMusic() {
+    playLoopAudio(appAssets.quizbgSound);
+    // isPlaying = true;
+  }
+
+  void playMenuMusic(){
+    playAudio(appAssets.mainMenuBgScreen);
+  }
+
+  void audioDispose () {
+    state.loopAudioPlayer.dispose();
   }
 }
