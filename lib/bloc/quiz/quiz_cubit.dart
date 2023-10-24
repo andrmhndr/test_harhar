@@ -15,14 +15,20 @@ class QuizCubit extends Cubit<QuizState> {
   QuizCubit() : super(QuizState.initial());
 
   void nextQuiz() {
-    stopAudio();
+    // stopAudio();
+    // audioDispose();
+
+    // state.answerController.clear();
     clear();
     if (state.count + 1 > state.quiz.length - 1) {
+      stopAudio();
       // emit(state.copyWith(count: 0));
       Get.back();
+      // emit(QuizState.initial());
       Get.to(() => GameEndSCreen());
-      emit(QuizState.initial());
     } else {
+      // replayAuido();
+      // playLoopAudio(appAssets.quizbgSound);
       emit(
         state.copyWith(
             count: (state.count + 1 > state.quiz.length - 1)
@@ -31,12 +37,14 @@ class QuizCubit extends Cubit<QuizState> {
       );
       // playBackgroundMusic();
       // playAudio(appAssets.quizbgSound);
-      playLoopAudio(appAssets.quizbgSound);
+
       startAnswers();
+      // playLoopAudio(appAssets.quizbgSound);
     }
   }
 
   void clear() {
+    state.charCollect.clear();
     for (TextEditingController controller in state.answerController) {
       controller.clear();
     }
@@ -139,13 +147,56 @@ class QuizCubit extends Cubit<QuizState> {
     // isPlaying = true;
   }
 
+  void alertDialog(context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('LEVEL CLEAR!'),
+          actions: [
+            MaterialButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('NICE!'),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void showAlert(BuildContext context, String title) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(title),
+          // content: Text(message),
+          actions: <Widget>[
+            MaterialButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void stopAudio() {
     state.loopAudioPlayer.stop();
     // isPlaying = false;
   }
 
   void stopMainAudio() {
-    state.audioPlayer.stop();
+    state.audioPlayer.pause();
+  }
+
+  void replayAuido() {
+    state.loopAudioPlayer.seek(Duration.zero);
   }
 
   void playBackgroundMusic() {
@@ -153,11 +204,11 @@ class QuizCubit extends Cubit<QuizState> {
     // isPlaying = true;
   }
 
-  void playMenuMusic(){
+  void playMenuMusic() {
     playAudio(appAssets.mainMenuBgScreen);
   }
 
-  void audioDispose () {
+  void audioDispose() {
     state.loopAudioPlayer.dispose();
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:test_harhar/app_assets.dart';
+import 'package:test_harhar/bloc/quiz/quiz_cubit.dart';
 import 'package:test_harhar/screen/home_screen.dart';
 
 class GameEndSCreen extends StatefulWidget {
@@ -11,6 +13,13 @@ class GameEndSCreen extends StatefulWidget {
 }
 
 class _GameEndSCreenState extends State<GameEndSCreen> {
+
+  @override
+  void initState() {
+    context.read<QuizCubit>().playLoopAudio(appAssets.gameEndBGM);
+    super.initState();
+    
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,6 +45,7 @@ class _GameEndSCreenState extends State<GameEndSCreen> {
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 230),
                   child: ElevatedButton(
                     onPressed: () {
+                      context.read<QuizCubit>().stopAudio();
                       Get.to(() => HomeScreen());
                     },
                     style: ButtonStyle(

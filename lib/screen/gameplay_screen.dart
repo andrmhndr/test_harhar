@@ -67,7 +67,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
   int hehehe = 0;
 
   void dispose() {
-    context.read<QuizCubit>().audioDispose();
+    context.read<QuizCubit>().clear();
+    // context.read<QuizCubit>().audioDispose();
     super.dispose();
   }
 
@@ -77,18 +78,22 @@ class _GameplayScreenState extends State<GameplayScreen> {
     // double screenWidth = MediaQuery.of(context).size.width;
     return BlocConsumer<QuizCubit, QuizState>(
       listener: (context, state) {
-        
-
         if (state.combMainAnswr == state.combWords) {
-          // context.read<QuizCubit>().playLoopAudio(appAssets.quizbgSound);
+          context.read<QuizCubit>().playLoopAudio(appAssets.quizbgSound);
           context.read<QuizCubit>().stopAudio();
-          context.read<QuizCubit>().playAudio(appAssets.lvlClearSound);
+          // context.read<QuizCubit>().playAudio(appAssets.lvlClearSound);
         }
       },
       builder: (context, state) {
-        
         print(state.count);
         print(state.quiz.length);
+
+        if (state.combMainAnswr == state.combWords) {
+          context.read<QuizCubit>().playAudio(appAssets.lvlClearSound);
+          // context.read<QuizCubit>().showAlert(context, 'NICE!');
+          // context.read<QuizCubit>().alertDialog(context);
+          
+        }
 
         return Scaffold(
           // appBar: AppBar(
@@ -401,12 +406,15 @@ class _GameplayScreenState extends State<GameplayScreen> {
                 ),
               Padding(
                 padding: EdgeInsets.all(8),
-                child:
-                    ElevatedButton(onPressed: () {
-                       context.read<QuizCubit>().stopAudio();
-                        // context.read<QuizCubit>().stopAudio();
-                        context.read<QuizCubit>().nextQuiz();
-                    }, child: const Text('next')),
+                child: ElevatedButton(
+                    onPressed: () {
+                      //  context.read<QuizCubit>().stopAudio();
+                      // context.read<QuizCubit>().stopAudio();
+                      context.read<QuizCubit>().nextQuiz();
+                      // context.read<QuizCubit>().playLoopAudio(appAssets.mainBgSound);
+                      // context.read<QuizCubit>().replayAuido();
+                    },
+                    child: const Text('next')),
               ),
               // Padding(
               //   padding: const EdgeInsets.all(8.0),
