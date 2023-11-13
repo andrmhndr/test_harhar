@@ -25,18 +25,22 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // context.read<QuizCubit>().playLoopAudio(appAssets.mainBgSound);
+    // context.read<QuizCubit>().stopAudio();
+    context.read<QuizCubit>().playLoopAudio(appAssets.mainBgSound);
     super.initState();
+    
   }
 
   @override
   void dispose() {
-    context.read<QuizCubit>().audioDispose();
+    // context.read<QuizCubit>().audioDispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+
+
     // context.read<QuizCubit>().playLoopAudio(appAssets.mainBgSound);
 
     // context.read<QuizCubit>().playMenuMusic();

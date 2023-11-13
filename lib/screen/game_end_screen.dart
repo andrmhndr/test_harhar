@@ -45,7 +45,7 @@ class _GameEndSCreenState extends State<GameEndSCreen> {
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 230),
                   child: ElevatedButton(
                     onPressed: () {
-                      context.read<QuizCubit>().stopAudio();
+                      // context.read<QuizCubit>().stopAudio();
                       Get.to(() => HomeScreen());
                     },
                     style: ButtonStyle(

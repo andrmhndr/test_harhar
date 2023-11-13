@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:test_harhar/app_assets.dart';
 import 'package:test_harhar/bloc/quiz/quiz_cubit.dart';
+import 'package:test_harhar/screen/game_end_screen.dart';
 
 class GameplayScreen extends StatefulWidget {
   @override
@@ -18,6 +19,7 @@ class GameplayScreen extends StatefulWidget {
 class _GameplayScreenState extends State<GameplayScreen> {
   @override
   void initState() {
+    // context.read<QuizCubit>().stopAudio();
     context.read<QuizCubit>().playLoopAudio(appAssets.quizbgSound);
     context.read<QuizCubit>().startAnswers();
     super.initState();
@@ -79,20 +81,20 @@ class _GameplayScreenState extends State<GameplayScreen> {
     return BlocConsumer<QuizCubit, QuizState>(
       listener: (context, state) {
         if (state.combMainAnswr == state.combWords) {
-          context.read<QuizCubit>().playLoopAudio(appAssets.quizbgSound);
-          context.read<QuizCubit>().stopAudio();
+          // context.read<QuizCubit>().playLoopAudio(appAssets.quizbgSound);
+          // context.read<QuizCubit>().stopAudio();
           // context.read<QuizCubit>().playAudio(appAssets.lvlClearSound);
         }
       },
       builder: (context, state) {
         print(state.count);
         print(state.quiz.length);
+        
 
         if (state.combMainAnswr == state.combWords) {
           context.read<QuizCubit>().playAudio(appAssets.lvlClearSound);
           // context.read<QuizCubit>().showAlert(context, 'NICE!');
           // context.read<QuizCubit>().alertDialog(context);
-          
         }
 
         return Scaffold(
@@ -169,7 +171,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                             overflow: TextOverflow.ellipsis,
                                           )
                                         : Text(" "),
-                              )
+                              ),
                             ],
                           ),
                         );
@@ -319,10 +321,10 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
                                                 // On Change Event
                                                 onChanged: (value) {
-                                                  context
-                                                      .read<QuizCubit>()
-                                                      .playAudio(
-                                                          appAssets.typeSound);
+                                                  // context
+                                                  //     .read<QuizCubit>()
+                                                  //     .playAudio(
+                                                  //         appAssets.typeSound);
                                                   // if (value != '') {
                                                   // controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length),);
                                                   context.read<QuizCubit>().setAnswer(
@@ -407,12 +409,8 @@ class _GameplayScreenState extends State<GameplayScreen> {
               Padding(
                 padding: EdgeInsets.all(8),
                 child: ElevatedButton(
-                    onPressed: () {
-                      //  context.read<QuizCubit>().stopAudio();
-                      // context.read<QuizCubit>().stopAudio();
-                      context.read<QuizCubit>().nextQuiz();
-                      // context.read<QuizCubit>().playLoopAudio(appAssets.mainBgSound);
-                      // context.read<QuizCubit>().replayAuido();
+                    onPressed: () async {
+                        context.read<QuizCubit>().nextQuiz();
                     },
                     child: const Text('next')),
               ),

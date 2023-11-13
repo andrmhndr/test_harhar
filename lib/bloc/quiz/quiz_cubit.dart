@@ -14,36 +14,37 @@ part 'quiz_state.dart';
 class QuizCubit extends Cubit<QuizState> {
   QuizCubit() : super(QuizState.initial());
 
-  void nextQuiz() {
+  Future<void> nextQuiz() async {
     // stopAudio();
     // audioDispose();
+    // pauseAudio();
 
     // state.answerController.clear();
     clear();
-    if (state.count + 1 > state.quiz.length - 1) {
-      stopAudio();
-      // emit(state.copyWith(count: 0));
-      Get.back();
-      // emit(QuizState.initial());
+
+    if (state.count + 1 == state.quiz.length) {
       Get.to(() => GameEndSCreen());
     } else {
-      // replayAuido();
-      // playLoopAudio(appAssets.quizbgSound);
+      
       emit(
         state.copyWith(
             count: (state.count + 1 > state.quiz.length - 1)
                 ? 0
                 : state.count + 1),
       );
-      // playBackgroundMusic();
-      // playAudio(appAssets.quizbgSound);
-
-      startAnswers();
       // playLoopAudio(appAssets.quizbgSound);
     }
+
+    // replayAuido();
+
+    // playBackgroundMusic();
+    // playAudio(appAssets.quizbgSound);
+
+    startAnswers();
+    // playLoopAudio(appAssets.quizbgSound);
   }
 
-  void clear() {
+  Future<void> clear() async {
     state.charCollect.clear();
     for (TextEditingController controller in state.answerController) {
       controller.clear();
@@ -140,10 +141,15 @@ class QuizCubit extends Cubit<QuizState> {
     await state.audioPlayer.play();
   }
 
-  void playLoopAudio(String audioUrl) async {
-    await state.loopAudioPlayer.setAsset(audioUrl);
-    await state.loopAudioPlayer.setLoopMode(LoopMode.one);
-    await state.loopAudioPlayer.play();
+  Future playLoopAudio(String audioUrl) async {
+    try {
+      // await stopAudio();
+      await state.loopAudioPlayer.setAsset(audioUrl);
+      await state.loopAudioPlayer.setLoopMode(LoopMode.all);
+      await state.loopAudioPlayer.play();
+    } catch (e) {
+      print("Error: $e");
+    }
     // isPlaying = true;
   }
 
@@ -186,8 +192,8 @@ class QuizCubit extends Cubit<QuizState> {
     );
   }
 
-  void stopAudio() {
-    state.loopAudioPlayer.stop();
+  Future<void> stopAudio() async {
+    await state.loopAudioPlayer.stop();
     // isPlaying = false;
   }
 
@@ -208,7 +214,12 @@ class QuizCubit extends Cubit<QuizState> {
     playAudio(appAssets.mainMenuBgScreen);
   }
 
+  void pauseAudio() {
+    state.loopAudioPlayer.pause();
+  }
+
   void audioDispose() {
     state.loopAudioPlayer.dispose();
+    // super.dispose();
   }
 }
