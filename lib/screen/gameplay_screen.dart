@@ -345,6 +345,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                                           : '');
                                                   // }
                                                   // moveToNext(state.quiz[state.count].answers[index][charIndex]);
+                                                  FocusScope.of(context).nextFocus();
                                                 },
                                               ),
                                             ),
