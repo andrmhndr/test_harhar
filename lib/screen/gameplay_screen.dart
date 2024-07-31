@@ -34,74 +34,34 @@ class _GameplayScreenState extends State<GameplayScreen> {
   final typePlayer = AudioPlayer();
   final lvlClearPlayer = AudioPlayer();
 
-  void startTimer() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (seconds > -1) {
-        setState(() => seconds++);
-      } else {
-        stopTimer();
-      }
-    });
-  }
-
-  void stopTimer() {
-    timer?.cancel();
-  }
-
-  void resetTimer() {
-    stopTimer();
-    setState(() {
-      seconds = 0;
-    });
-  }
-
-  final List<FocusNode> _focusNode = List.generate(50, (index) => FocusNode());
-
-  void moveToNext(int index) {
-    final nextIndex = index + 1;
-    final nextFocusNode = _focusNode[nextIndex];
-
-    FocusScope.of(context).requestFocus(nextFocusNode);
-  }
-
-  String words = "";
-
-  int hehehe = 0;
-
   void dispose() {
     context.read<QuizCubit>().clear();
-    // context.read<QuizCubit>().audioDispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // double screenHeight = MediaQuery.of(context).size.height;
-    // double screenWidth = MediaQuery.of(context).size.width;
     return BlocConsumer<QuizCubit, QuizState>(
       listener: (context, state) {
-        if (state.combMainAnswr == state.combWords) {
-          // context.read<QuizCubit>().playLoopAudio(appAssets.quizbgSound);
-          // context.read<QuizCubit>().stopAudio();
-          // context.read<QuizCubit>().playAudio(appAssets.lvlClearSound);
-        }
+        if (state.combMainAnswr == state.combWords) {}
       },
       builder: (context, state) {
-        print(state.count);
-        print(state.quiz.length);
-        
+        print('Level: ' + state.count.toString());
+        print('Jumlah Level: ' + state.quiz.length.toString());
+        print('CharCollect: ' + state.charCollect.toString());
+        print('combWords: ' + state.combWords);
+        print('combMainAnswr: ' + state.combMainAnswr);
+        print('answrController Text: ' +
+            state.answerController
+                .map((controller) => controller.text)
+                .toString());
+        print('mainAnswer: ' + state.quiz[state.count].mainAnswer);
 
         if (state.combMainAnswr == state.combWords) {
           context.read<QuizCubit>().playAudio(appAssets.lvlClearSound);
-          // context.read<QuizCubit>().showAlert(context, 'NICE!');
-          // context.read<QuizCubit>().alertDialog(context);
         }
 
         return Scaffold(
-          // appBar: AppBar(
-          //   centerTitle: true,
-          //   title: Text('Time : $seconds'),
-          // ),
           body: Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -131,9 +91,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       itemCount: state.quiz[state.count].mainAnswer.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          // decoration: BoxDecoration(color: Colors.amber),
-                          padding: EdgeInsets.all(2),
-                          // height: MediaQuery.of(context).size.height * 0.08,
+                          padding: EdgeInsets.all(1),
                           color: Color(0xfff1f0ea),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -151,7 +109,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                                   .mainAnswer[index])]
                                       .value
                                       .text,
-                                  style: const TextStyle(fontSize: 18),
+                                  style: const TextStyle(fontSize: 14),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
@@ -159,18 +117,18 @@ class _GameplayScreenState extends State<GameplayScreen> {
                               //Main Answer's Index
                               Expanded(
                                 flex: 4,
-                                child:
-                                    state.quiz[state.count].mainAnswer[index] !=
-                                            " "
-                                        ? Text(
-                                            state.quiz[state.count]
-                                                .order(state.quiz[state.count]
-                                                    .mainAnswer[index])
-                                                .toString(),
-                                            style: TextStyle(fontSize: 15),
-                                            overflow: TextOverflow.ellipsis,
-                                          )
-                                        : Text(" "),
+                                child: state.quiz[state.count]
+                                            .mainAnswer[index] !=
+                                        " "
+                                    ? Text(
+                                        state.quiz[state.count]
+                                            .order(state.quiz[state.count]
+                                                .mainAnswer[index])
+                                            .toString(),
+                                        style: const TextStyle(fontSize: 12),
+                                        overflow: TextOverflow.ellipsis,
+                                      )
+                                    : const Text(" "),
                               ),
                             ],
                           ),
@@ -178,48 +136,101 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       },
                       gridDelegate:
                           const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 25,
-                              childAspectRatio: 4 / 9,
-                              crossAxisSpacing: 5,
-                              mainAxisSpacing: 30),
+                        maxCrossAxisExtent: 20,
+                        childAspectRatio: 4 / 7,
+                        crossAxisSpacing: 5,
+                        mainAxisSpacing: 10,
+                      ),
                     ),
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 2,
                   ),
+
                   //Translate
                   state.combMainAnswr == state.combWords
                       ? Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5),
-                          child: Container(
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(color: Color(0xfff1f0ea)),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20),
-                              child: Text(
-                                state.quiz[state.count].mainAnswerTranslate,
-                                textAlign: TextAlign.center,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Column(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xfff1f0ea),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: Text(
+                                    state.quiz[state.count].mainAnswerTranslate,
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(fontSize: 13),
+                                  ),
+                                ),
                               ),
-                            ),
+                              Container(
+                                width: double.infinity,
+                                alignment: Alignment.center,
+                                decoration: const BoxDecoration(
+                                  color: Color.fromARGB(255, 211, 211, 207),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(15),
+                                    bottomRight: Radius.circular(15),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      context.read<QuizCubit>().nextQuiz();
+                                    },
+                                    style: ButtonStyle(
+                                      backgroundColor: MaterialStatePropertyAll(
+                                          Colors.lightBlue[700]),
+                                      shape: MaterialStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                      ),
+                                    ),
+                                    child: const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 26, vertical: 14),
+                                      child: Text(
+                                        'Next Level',
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         )
-                      : SizedBox(
-                          height: 10,
+                      : const SizedBox(
+                          height: 1,
                         ),
 
                   const SizedBox(
                     height: 5,
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 5,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 0,
                     ),
                     child: Container(
                       width: double.infinity,
-                      decoration: BoxDecoration(color: Colors.lightBlueAccent),
+                      decoration: BoxDecoration(color: Colors.grey[800]),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Text(
                           state.quiz[state.count].instruction,
                           textAlign: TextAlign.center,
@@ -233,7 +244,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                   ),
 
                   const SizedBox(
-                    height: 5,
+                    height: 2,
                   ),
 
                   //Quiz
@@ -248,7 +259,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                             color: Color(0xeffe0ddcf),
                           ),
                           width: MediaQuery.of(context).size.width,
-                          height: 80,
+                          height: 70,
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -261,7 +272,7 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                   height: 60,
                                   child: Text(
                                     state.quiz[state.count].questions[index],
-                                    style: GoogleFonts.roboto(fontSize: 18),
+                                    style: GoogleFonts.roboto(fontSize: 14),
                                   ),
                                 ),
                               ),
@@ -269,7 +280,6 @@ class _GameplayScreenState extends State<GameplayScreen> {
                               //Answers
                               Expanded(
                                 child: Container(
-                                  // margin: EdgeInsets.all(20),
                                   alignment: Alignment.centerRight,
                                   child: ListView.separated(
                                     shrinkWrap: true,
@@ -277,15 +287,14 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                     physics:
                                         const NeverScrollableScrollPhysics(),
                                     itemBuilder: (context, charIndex) {
-                                      print(state.charCollect);
-
                                       final controller = state.answerController[
                                           state.charCollect.indexWhere(
-                                              (element) =>
-                                                  element ==
-                                                  state.quiz[state.count]
-                                                          .answers[index]
-                                                      [charIndex])];
+                                        (element) =>
+                                            element ==
+                                            state.quiz[state.count]
+                                                .answers[index][charIndex],
+                                      )];
+
                                       return Container(
                                         decoration: BoxDecoration(
                                             borderRadius:
@@ -296,17 +305,17 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                           children: [
                                             //Answer's Word
                                             SizedBox(
-                                              height: 40,
+                                              height: 35,
                                               child: TextField(
-                                                // focusNode: _focusNode[state.quiz[state.count].answers[index][charIndex]],
                                                 decoration:
                                                     const InputDecoration(
                                                   contentPadding:
                                                       EdgeInsets.fromLTRB(
                                                           3, 0, 0, 15),
                                                   counter: Offstage(),
+                                                  labelStyle:
+                                                      TextStyle(fontSize: 13),
                                                 ),
-                                                // maxLength: 1,
                                                 textAlign: TextAlign.center,
                                                 controller: controller,
                                                 onTap: () {
@@ -321,12 +330,6 @@ class _GameplayScreenState extends State<GameplayScreen> {
 
                                                 // On Change Event
                                                 onChanged: (value) {
-                                                  // context
-                                                  //     .read<QuizCubit>()
-                                                  //     .playAudio(
-                                                  //         appAssets.typeSound);
-                                                  // if (value != '') {
-                                                  // controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length),);
                                                   context.read<QuizCubit>().setAnswer(
                                                       answerIndex: state
                                                           .charCollect
@@ -343,24 +346,28 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                                                       .last)
                                                               .toLowerCase()
                                                           : '');
-                                                  // }
-                                                  // moveToNext(state.quiz[state.count].answers[index][charIndex]);
-                                                  FocusScope.of(context).nextFocus();
+                                                  if (value.isNotEmpty) {
+                                                    FocusScope.of(context)
+                                                        .nextFocus();
+                                                  }
+
+                                                  print(value);
+                                                  print(state.quiz[state.count]
+                                                      .answers[index]);
                                                 },
                                               ),
                                             ),
-                                            //Answer's Indeex
+
+                                            //Answer's Index
                                             Text(
-                                                '${state.quiz[state.count].order(state.quiz[state.count].answerToList(index)[charIndex])}'
-                                                // state.quiz[state.count].answerToList(index)[charIndex]
-                                                )
+                                              '${state.quiz[state.count].order(state.quiz[state.count].answerToList(index)[charIndex])}',
+                                              style: const TextStyle(
+                                                fontSize: 10,
+                                              ),
+                                            )
                                           ],
                                         ),
                                       );
-                                      // Text(
-                                      //   state.quiz[state.count].answers[index]
-                                      //       [charIndex],
-                                      // );
                                     },
                                     itemCount: state.quiz[state.count]
                                         .answers[index].runes.length,
@@ -373,10 +380,6 @@ class _GameplayScreenState extends State<GameplayScreen> {
                                   ),
                                 ),
                               ),
-
-                              // Text(
-                              //   state.quiz[state.count].answers[index],
-                              // )
                             ],
                           ),
                         );
@@ -388,89 +391,92 @@ class _GameplayScreenState extends State<GameplayScreen> {
                       },
                     ),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  )
                 ],
               ),
             ),
           ),
-          bottomNavigationBar: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (state.combMainAnswr == state.combWords)
-                Padding(
-                  padding: EdgeInsets.all(8),
-                  child: ElevatedButton(
-                      onPressed: () {
-                        context.read<QuizCubit>().stopAudio();
-                        // context.read<QuizCubit>().stopAudio();
-                        context.read<QuizCubit>().nextQuiz();
-                      },
-                      child: Text('Clear')),
-                ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: ElevatedButton(
-                    onPressed: () async {
-                        context.read<QuizCubit>().nextQuiz();
-                    },
-                    child: const Text('next')),
-              ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: ElevatedButton(
-              //     onPressed: () {
-              //       startTimer();
-              //     },
-              //     child: Text('Start'),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: EdgeInsets.all(8),
-              //   child: ElevatedButton(
-              //     onPressed: () {
-              //       stopTimer();
-              //     },
-              //     child: Text('Stop'),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.all(8.0),
-              //   child: ElevatedButton(
-              //     onPressed: () {
-              //       resetTimer();
-              //     },
-              //     child: Text('Reset'),
-              //   ),
-              // ),
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                    onPressed: () {
-                      // Navigator.popAndPushNamed(context, '/home');
-                      Get.back();
-                    },
-                    child: Text('Back')),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: ElevatedButton(
-                    onPressed: () {
-                      context
-                          .read<QuizCubit>()
-                          .playLoopAudio(appAssets.quizbgSound);
-                    },
-                    child: Text('Song')),
-              ),
-              Padding(
-                padding: EdgeInsets.all(8),
-                child: ElevatedButton(
-                    onPressed: () {
-                      context.read<QuizCubit>().stopAudio();
-                    },
-                    child: Text('Stop')),
-              )
-            ],
-          ),
+          // bottomNavigationBar: Row(
+          //   crossAxisAlignment: CrossAxisAlignment.center,
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: [
+          //     if (state.combMainAnswr == state.combWords)
+          //       Padding(
+          //         padding: EdgeInsets.all(8),
+          //         child: ElevatedButton(
+          //             onPressed: () {
+          //               context.read<QuizCubit>().stopAudio();
+          //               // context.read<QuizCubit>().stopAudio();
+          //               context.read<QuizCubit>().nextQuiz();
+          //             },
+          //             child: Text('Clear')),
+          //       ),
+          //     Padding(
+          //       padding: EdgeInsets.all(8),
+          //       child: ElevatedButton(
+          //           onPressed: () async {
+          //             context.read<QuizCubit>().nextQuiz();
+          //           },
+          //           child: const Text('next')),
+          //     ),
+          //     // Padding(
+          //     //   padding: const EdgeInsets.all(8.0),
+          //     //   child: ElevatedButton(
+          //     //     onPressed: () {
+          //     //       startTimer();
+          //     //     },
+          //     //     child: Text('Start'),
+          //     //   ),
+          //     // ),
+          //     // Padding(
+          //     //   padding: EdgeInsets.all(8),
+          //     //   child: ElevatedButton(
+          //     //     onPressed: () {
+          //     //       stopTimer();
+          //     //     },
+          //     //     child: Text('Stop'),
+          //     //   ),
+          //     // ),
+          //     // Padding(
+          //     //   padding: const EdgeInsets.all(8.0),
+          //     //   child: ElevatedButton(
+          //     //     onPressed: () {
+          //     //       resetTimer();
+          //     //     },
+          //     //     child: Text('Reset'),
+          //     //   ),
+          //     // ),
+          //     Padding(
+          //       padding: EdgeInsets.all(8.0),
+          //       child: ElevatedButton(
+          //           onPressed: () {
+          //             // Navigator.popAndPushNamed(context, '/home');
+          //             Get.back();
+          //           },
+          //           child: Text('Back')),
+          //     ),
+          //     Padding(
+          //       padding: EdgeInsets.all(8),
+          //       child: ElevatedButton(
+          //           onPressed: () {
+          //             context
+          //                 .read<QuizCubit>()
+          //                 .playLoopAudio(appAssets.quizbgSound);
+          //           },
+          //           child: Text('Song')),
+          //     ),
+          //     Padding(
+          //       padding: EdgeInsets.all(8),
+          //       child: ElevatedButton(
+          //           onPressed: () {
+          //             context.read<QuizCubit>().stopAudio();
+          //           },
+          //           child: Text('Stop')),
+          //     )
+          //   ],
+          // ),
         );
       },
     );

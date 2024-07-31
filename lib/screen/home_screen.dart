@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 // import 'package:assets_audio_player/assets_audio_player.dart';
@@ -12,6 +13,7 @@ import 'package:just_audio/just_audio.dart';
 import 'package:test_harhar/app_assets.dart';
 import 'package:test_harhar/bloc/quiz/quiz_cubit.dart';
 import 'package:test_harhar/screen/gameplay_screen.dart';
+import 'package:test_harhar/screen/tutorial.dart';
 
 // import 'package:audioplayers/audioplayers.dart';
 
@@ -28,7 +30,6 @@ class _HomeScreenState extends State<HomeScreen> {
     // context.read<QuizCubit>().stopAudio();
     context.read<QuizCubit>().playLoopAudio(appAssets.mainBgSound);
     super.initState();
-    
   }
 
   @override
@@ -39,20 +40,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-
-    // context.read<QuizCubit>().playLoopAudio(appAssets.mainBgSound);
-
-    // context.read<QuizCubit>().playMenuMusic();
-    // playMenuAudio();
-    // String menuSong = 'lib/assets/musics/Wallpaper.mp3';
-    // assetsAudioPlayer.open(Audio(menuSong),autoStart: false);
     double screenHeight = MediaQuery.of(context).size.height;
     double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Main Menu'),
-      ),
       body: Container(
         height: screenHeight,
         decoration: const BoxDecoration(
@@ -67,18 +57,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 24,
                 ),
-                Image.asset(appAssets.mainLogo, width: screenWidth * 0.8),
+                Image.asset(appAssets.mainLogo, width: screenWidth * 0.7),
 
                 // Add main menu options/widgets here, e.g., buttons to start the game5
                 SizedBox(
-                  height: screenHeight * 0.1,
+                  height: screenHeight * 0.07,
                 ),
+                
                 Padding(
                   padding: const EdgeInsets.fromLTRB(2, 40, 2, 2),
                   child: ElevatedButton(
                     onPressed: () {
-                      context.read<QuizCubit>().stopAudio();
-                      context.read<QuizCubit>().playAudio(appAssets.clickSound);
                       context.read<QuizCubit>().startGame();
                     },
                     style: ButtonStyle(
@@ -91,31 +80,77 @@ class _HomeScreenState extends State<HomeScreen> {
                         Size(screenWidth * 0.6, screenHeight * 0.04),
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(20.0),
                       child: Text('START GAME', style: TextStyle(fontSize: 36)),
                     ),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    context
-                        .read<QuizCubit>()
-                        .playLoopAudio(appAssets.mainBgSound);
-                    // audioPlay.play(UrlSource('https://motionarray.com/royalty-free-music/corporate-harmonics/?utm_source=google&utm_medium=cpc&utm_campaign=16137732949&utm_content=131484452045&utm_term=free+royalty+free+music&keyword=free+royalty+free+music&ad=620461677255&matchtype=b&device=c&gclid=Cj0KCQjw0bunBhD9ARIsAAZl0E1AjF9fdMoYTkiqGBp0lp4hYzWNhglinLrXL4YMGuDjTpWXumaY1gIaAnLPEALw_wcB&subcategories=free'));
-                    // assetsAudioPlayer.play();
-                    // audioPlay.play();
-                    // playMenuAudio();
-                  },
-                  child: Text('song'),
+
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(2, 40, 2, 2),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Get.to(() => const TutorialScreen());
+                    },
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0xFF2D232E)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40))),
+                      minimumSize: MaterialStatePropertyAll(
+                        Size(screenWidth * 0.6, screenHeight * 0.04),
+                      ),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child:
+                          Text('Cara Bermain', style: TextStyle(fontSize: 36)),
+                    ),
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    context.read<QuizCubit>().stopAudio();
-                    // stopAudio();
-                  },
-                  child: Text('Stop song'),
+
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(2, 40, 2, 2),
+                  child: ElevatedButton(
+                    onPressed: () => exit(0),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0xFF2D232E)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(40))),
+                      minimumSize: MaterialStatePropertyAll(
+                        Size(screenWidth * 0.6, screenHeight * 0.04),
+                      ),
+                    ),
+                    child: const Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text('EXIT', style: TextStyle(fontSize: 36)),
+                    ),
+                  ),
                 ),
+
+                // ElevatedButton(
+                //   onPressed: () {
+                //     context
+                //         .read<QuizCubit>()
+                //         .playLoopAudio(appAssets.mainBgSound);
+                //     // audioPlay.play(UrlSource('https://motionarray.com/royalty-free-music/corporate-harmonics/?utm_source=google&utm_medium=cpc&utm_campaign=16137732949&utm_content=131484452045&utm_term=free+royalty+free+music&keyword=free+royalty+free+music&ad=620461677255&matchtype=b&device=c&gclid=Cj0KCQjw0bunBhD9ARIsAAZl0E1AjF9fdMoYTkiqGBp0lp4hYzWNhglinLrXL4YMGuDjTpWXumaY1gIaAnLPEALw_wcB&subcategories=free'));
+                //     // assetsAudioPlayer.play();
+                //     // audioPlay.play();
+                //     // playMenuAudio();
+                //   },
+                //   child: Text('song'),
+                // ),
+                // ElevatedButton(
+                //   onPressed: () {
+                //     context.read<QuizCubit>().stopAudio();
+                //     // stopAudio();
+                //   },
+                //   child: Text('Stop song'),
+                // ),
                 // ElevatedButton(
                 //   onPressed: () {
                 //     context.read<QuizCubit>().playAudio(appAssets.clickSound);

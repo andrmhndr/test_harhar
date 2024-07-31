@@ -15,15 +15,11 @@ class QuizCubit extends Cubit<QuizState> {
   QuizCubit() : super(QuizState.initial());
 
   Future<void> nextQuiz() async {
-    // stopAudio();
-    // audioDispose();
-    // pauseAudio();
-
-    // state.answerController.clear();
     clear();
-
     if (state.count + 1 == state.quiz.length) {
-      Get.to(() => GameEndSCreen());
+      stopAudio();
+      Get.to(() => const GameEndSCreen());
+      emit(QuizState.initial());
     } else {
       
       emit(
@@ -32,16 +28,8 @@ class QuizCubit extends Cubit<QuizState> {
                 ? 0
                 : state.count + 1),
       );
-      // playLoopAudio(appAssets.quizbgSound);
     }
-
-    // replayAuido();
-
-    // playBackgroundMusic();
-    // playAudio(appAssets.quizbgSound);
-
     startAnswers();
-    // playLoopAudio(appAssets.quizbgSound);
   }
 
   Future<void> clear() async {
@@ -54,13 +42,9 @@ class QuizCubit extends Cubit<QuizState> {
   void startGame() {
     playAudio(appAssets.clickSound);
 
-    // playLoopAudio(appAssets.quizbgSound);
-    stopAudio();
-
-    // Navigate to the gameplay screen when the button is pressed
-    // Navigator.popAndPushNamed(context, '/gameplay');
+    playLoopAudio(appAssets.quizbgSound);
+    
     Get.to(() => GameplayScreen());
-    emit(QuizState.initial());
   }
 
   void updateCharCollect(String value) {
@@ -99,28 +83,13 @@ class QuizCubit extends Cubit<QuizState> {
         charCollect: charCollect,
       ),
     );
-    // List<String> answers = [];
-    // for (var element in state.quiz[state.count].answers) {
-    //   String text = '';
-    //   for (var count = 0; count < element.length; count++) {
-    //     text = text + '-';
-    //   }
-    //   answers.add(text);
-    // }
-    // emit(state.copyWith(answers: answers));
   }
 
   void setAnswer({
-    // required int questionIndex,
     required int answerIndex,
     required String answer,
-  }) {
-    // String text = state.answers[questionIndex];
-    // text =
-    //     text.substring(0, answerIndex) + answer + text.substring(answerIndex);
-    // var answerList = state.answers;
-    // answerList[questionIndex] = text;
-    // emit(state.copyWith(answers: answerList));
+  }) 
+  {
     var controller = TextEditingController(text: answer);
     List<TextEditingController> controllerList =
         List.from(state.answerController);
@@ -143,58 +112,17 @@ class QuizCubit extends Cubit<QuizState> {
 
   Future playLoopAudio(String audioUrl) async {
     try {
-      // await stopAudio();
       await state.loopAudioPlayer.setAsset(audioUrl);
       await state.loopAudioPlayer.setLoopMode(LoopMode.all);
       await state.loopAudioPlayer.play();
     } catch (e) {
       print("Error: $e");
     }
-    // isPlaying = true;
-  }
-
-  void alertDialog(context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('LEVEL CLEAR!'),
-          actions: [
-            MaterialButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text('NICE!'),
-            )
-          ],
-        );
-      },
-    );
-  }
-
-  void showAlert(BuildContext context, String title) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text(title),
-          // content: Text(message),
-          actions: <Widget>[
-            MaterialButton(
-              child: Text('OK'),
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-            ),
-          ],
-        );
-      },
-    );
+  
   }
 
   Future<void> stopAudio() async {
     await state.loopAudioPlayer.stop();
-    // isPlaying = false;
   }
 
   void stopMainAudio() {
@@ -207,7 +135,6 @@ class QuizCubit extends Cubit<QuizState> {
 
   void playBackgroundMusic() {
     playLoopAudio(appAssets.quizbgSound);
-    // isPlaying = true;
   }
 
   void playMenuMusic() {
@@ -220,6 +147,5 @@ class QuizCubit extends Cubit<QuizState> {
 
   void audioDispose() {
     state.loopAudioPlayer.dispose();
-    // super.dispose();
   }
 }

@@ -25,18 +25,19 @@ class _GameEndSCreenState extends State<GameEndSCreen> {
     return Scaffold(
       backgroundColor: Colors.grey,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage(appAssets.endScreenPage), fit: BoxFit.cover),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(
+                const Expanded(
                   child: SizedBox(
                     height: 100,
                   ),
@@ -45,18 +46,19 @@ class _GameEndSCreenState extends State<GameEndSCreen> {
                   padding: const EdgeInsets.fromLTRB(5, 0, 5, 230),
                   child: ElevatedButton(
                     onPressed: () {
-                      // context.read<QuizCubit>().stopAudio();
                       Get.to(() => HomeScreen());
                     },
                     style: ButtonStyle(
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
+                          borderRadius: BorderRadius.circular(15),
                         ),
                       ),
+                      backgroundColor:
+                          MaterialStateProperty.all(const Color(0xFF2D232E)),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                    child: const Padding(
+                      padding: EdgeInsets.all(16.0),
                       child: Text(
                         'Back to Main Menu',
                         style: TextStyle(fontSize: 32),
@@ -66,6 +68,7 @@ class _GameEndSCreenState extends State<GameEndSCreen> {
                 )
               ],
             ),
+            
           ],
         ),
       ),

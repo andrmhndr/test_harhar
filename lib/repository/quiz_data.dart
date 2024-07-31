@@ -2,108 +2,129 @@ import 'package:test_harhar/models/quiz.dart';
 
 class QuizData {
   static List<Quiz> datas = [
-    const Quiz(
-      mainAnswer: 'he was born in the jungle',
-      mainAnswerTranslate: 'Dia Lahir di Hutan',
-      instruction: 'Arti Kata',
-      questions: [
-        'Sepatu',
-        'Singa',
-        'Delapan Belas',
-        'Gitar',
-        'Perang',
-        'Lahir',
-        'Lebih Besar',
-        'Penjara',
-        'Keringat',
-        'Rahang',
-        'Gula',
-        'Mempelajari'
-        // 'cincin'
-      ],
-      answers: [
-        'shoes',
-        'lion',
-        'eighteen',
-        'guitar',
-        'war',
-        'birth',
-        'bigger',
-        'jail',
-        'sweat',
-        'jaw',
-        'sugar',
-        'learn'
-        // 'ring'
-      ],
-    ),
+    //1
     const Quiz(
       mainAnswer: 'i have a dream',
-      instruction: 'Arti Kata',
+      instruction: 'Artikan Kata-Kata Berikut',
       mainAnswerTranslate: '"Aku Punya Sebuah Impian" ~Martin Luther King Jr.',
       questions: [
+        'Mendengar',
         'Membangkitkan',
         'Mengagumi',
         'Marah',
         'Membaca',
         'Memperkerjakan',
         'Mengendarai',
-        // 'Mimpi',
         'Sungai',
         'Rusa'
       ],
       answers: [
+        'hear',
         'revive',
         'admire',
         'mad',
         'read',
         'hire',
         'ride',
-        // 'dream',
         'river',
-        'deer'
+        'deer',
       ],
     ),
+    //2
     const Quiz(
-      mainAnswer: 'be the change that you wish to see in the world',
-      mainAnswerTranslate:
-          '"Anda Harus Menjadi Perubahan yang Ingin Anda Lihat di Dunia" ~Mahatma Gandhi',
-      instruction: 'Arti Kata',
+      mainAnswer: 'togetherness is the key to success',
+      mainAnswerTranslate: '"Kebersamaan adalah kunci kesuksesan." - Gus Dur',
+      instruction: 'Artikan Kata-Kata Berikut',
       questions: [
-        'Keju',
-        'Kunci Inggris',
-        'Harapan',
-        'Pasir',
-        'Berdansa',
-        'Gerbang',
-        'Menekuk',
-        'Abu-abu',
-        'Kembar Dua',
-        'Burung Hantu',
-        'Batu Bara',
-        'Mengangkut',
-        'Sejarah',
-        'Pelangi',
-        'Membeli'
+        'Kesatria',
+        'Madu',
+        'Lapar',
+        'Layar',
+        'Jam',
+        'Koin',
+        'Kunci',
+        'Raja',
+        'Mereka',
+        'Matahari',
       ],
       answers: [
-        'cheese',
-        'wrench',
-        'wish',
-        'sand',
-        'dance',
-        'gate',
-        'bend',
-        'gray',
-        'twin',
-        'owl',
-        'coal',
-        'haul',
-        'history',
-        'rainbow',
-        'buying'
+        'knight',
+        'honey',
+        'hungry',
+        'screen',
+        'hour',
+        'coin',
+        'key',
+        'king',
+        'they',
+        'sun',
       ],
     ),
+    //3 
+    const Quiz(
+      mainAnswer: 'evil will win if the righteous do nothing',
+      mainAnswerTranslate:
+          '"Kejahatan akan menang bila orang yang benar tidak melakukan apa-apa." -Jenderal Sudirman',
+      instruction: 'Artikan Kata-Kata Berikut',
+      questions: [
+        'Rusa',
+        'Bunga',
+        'Angin',
+        'Salju',
+        'Baju',
+        'Delapan',
+        'Sungai',
+        'Lima',
+        'Lari',
+        'Selatan',
+        // 'cincin'
+      ],
+      answers: [
+        'deer',
+        'flower',
+        'wind',
+        'snow',
+        'shirt',
+        'eight',
+        'river',
+        'five',
+        'run',
+        'south',
+        // 'ring'
+      ],
+    ),
+    //4
+    const Quiz(
+      mainAnswer: 'fall seven times stand up eight',
+      mainAnswerTranslate:
+          '"Jatuh tujuh kali, berdiri delapan kali" - Pepatah Jepang',
+      instruction: 'Artikan Kata-Kata Berikut',
+      questions: [
+        'Simpan',
+        'Hewan',
+        'Manusia',
+        'Tumbuhan',
+        'Menit',
+        'Kepala',
+        'Ikan',
+        'Bendera',
+        'Kecepatan',
+        'Memberi',
+      ],
+      answers: [
+        'save',
+        'animal',
+        'human',
+        'plant',
+        'minute',
+        'head',
+        'fish',
+        'flag',
+        'speed',
+        'give',
+      ],
+    ),
+    //5
     const Quiz(
         mainAnswer: 'after darkness light is born',
         mainAnswerTranslate: '“Habis Gelap Terbitlah Terang” ~R. A. Kartini',
@@ -113,25 +134,30 @@ class QuizData {
           'Villain/Bad Guy',
           'Right',
           'Repair/Adjusment',
+          'Exit/Leave',
           'First',
           'Avoid/Drop',
           'Junior',
           'Death/Decease',
           'True/Correct',
-          'Small/Little'
+          'Small/Little',
+          'Day/Daytime'
         ],
         answers: [
           'kind',
           'hero',
           'left',
           'break',
+          'enter',
           'last',
           'bring',
           'senior',
           'birth',
           'false',
-          'large'
+          'large',
+          'night'
         ]),
+    //6
     const Quiz(
         mainAnswer: 'all that glitters is not gold',
         mainAnswerTranslate:
@@ -141,56 +167,26 @@ class QuizData {
           'Huge/Jumbo',
           'Unhappy/Sorrowful',
           'Very warm/Burning',
+          'Arm/Fist',
           'Rage/Fury',
           'Restroom/Bathroom',
           'Quiet/Soundless',
           'Dislike/Despise',
-          'Anger/Fury'
+          'Anger/Fury',
+          'Great/Wonderful'
         ],
         answers: [
           'giant',
           'sad',
           'hot',
+          'hand',
           'anger',
           'toilet',
           'silent',
           'hate',
-          'rage'
+          'rage',
+          'good'
         ]),
-    const Quiz(
-        mainAnswer: 'everyone is a teacher every house is a school',
-        mainAnswerTranslate:
-            '"Setiap Orang Menjadi Guru, Setiap Rumah Menjadi Sekolah" ~Ki Hajar Dewantara',
-        instruction: 'Deskripsi',
-        questions: [
-          'Benda keras dan padat yang berasal dari bumi atau planet lain, tetapi bukan logam',
-          'Wilayah yg dikepalai oleh seorang wali kota',
-          'Orang yang menonjol karena keberanian dan pengorbanannya dalam membela kebenaran',
-          'Dapat menangkap suara (bunyi) dengan telinga',
-          'Planet ke-2 di tata surya',
-          'Pembungkus kaki yang biasanya dibuat dari kulit (karet dan sebagainya)',
-          'Tumbuhan yang berbatang keras dan besar',
-          'Benda langit terdiri atas gas menyala seperti matahari, terutama tampak pada malam hari',
-          'Catatan sejumlah nama atau hal (tentang kata-kata, yang disusun berderet dari atas ke bawah',
-          'Kendaraan darat yang digerakkan oleh tenaga mesin',
-          'Masa yang lamanya dua belas bulan',
-          'Bunyi bahasa yang dihasilkan oleh mulut',
-          'Istana yg sekaligus dijadikan benteng'
-        ],
-        answers: [
-          'stone',
-          'city',
-          'hero',
-          'hear',
-          'venus',
-          'shoe',
-          'tree',
-          'star',
-          'list',
-          'car',
-          'years',
-          'vocal',
-          'castle',
-        ])
+    
   ];
 }

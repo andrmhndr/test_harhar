@@ -29,12 +29,6 @@ class MyApp extends StatelessWidget {
         ),
 
         home: HomeScreen(),
-        // initialRoute: '/home', // Set the initial route to the main menu
-        // routes: {
-        //   '/home': (context) => HomeScreen(), // Define the main menu screen
-        //   '/gameplay': (context) =>
-        //       GameplayScreen(), // Define the gameplay screen
-        // },
       ),
     );
   }

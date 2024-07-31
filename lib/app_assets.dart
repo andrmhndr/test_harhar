@@ -4,6 +4,13 @@ class appAssets {
  static const mainLogo = 'assets/images/logo.png';
  static const yellowPaper = 'assets/images/yellowLinedPaper.png';
  static const endScreenPage = 'assets/images/gameEndScreen.png';
+ static const tutorial1 = 'assets/images/t1.png';
+ static const tutorial2 = 'assets/images/t2.png';
+ static const tutorial3 = 'assets/images/t3.png';
+ static const tutorial4 = 'assets/images/t4.png';
+ static const tutorial5 = 'assets/images/t5.png';
+ static const tutorial6 = 'assets/images/t6.png';
+ static const tutorial7 = 'assets/images/t7.png';
 
  // sounds
  static const mainBgSound = 'assets/musics/Wallpaper.mp3';

@@ -3,11 +3,11 @@ part of 'quiz_cubit.dart';
 class QuizState extends Equatable {
   final List<String> charCollect;
   final List<Quiz> quiz;
-  final int count;
+  final int count;  
   final List<TextEditingController> answerController;
   final AudioPlayer audioPlayer;
   final AudioPlayer loopAudioPlayer;
-  final bool isLoading;
+  
 
   const QuizState({
     required this.quiz,
@@ -16,7 +16,6 @@ class QuizState extends Equatable {
     required this.answerController,
     required this.audioPlayer,
     required this.loopAudioPlayer,
-    required this.isLoading,
   });
 
   factory QuizState.initial() {
@@ -30,7 +29,6 @@ class QuizState extends Equatable {
       ),
       audioPlayer: AudioPlayer(),
       loopAudioPlayer: AudioPlayer(),
-      isLoading: true,
     );
   }
 
@@ -42,7 +40,6 @@ class QuizState extends Equatable {
         answerController,
         audioPlayer,
         loopAudioPlayer,
-        isLoading,
       ];
 
   QuizState copyWith({
@@ -61,7 +58,6 @@ class QuizState extends Equatable {
       answerController: answerController ?? this.answerController,
       audioPlayer: audioPlayer ?? this.audioPlayer,
       loopAudioPlayer: loopAudioPlayer ?? this.loopAudioPlayer,
-      isLoading: isLoading ?? this.isLoading,
     );
   }
 
